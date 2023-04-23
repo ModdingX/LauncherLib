@@ -7,4 +7,5 @@ test/C mapped/CB
 	fb Ljava/lang/String; fi
 	mz (Ljava/lang/String;Ljava/lang/String;)I mz
 		1 o1 secondB
+	xx (J)V xb
 mapped/CA mapped/CAB

@@ -9,3 +9,4 @@ test/C mapped/CA
 	fa Ljava/lang/String; fi
 	mz (Ljava/lang/String;Ljava/lang/String;)I mz
 		static
+	xx (I)V xa

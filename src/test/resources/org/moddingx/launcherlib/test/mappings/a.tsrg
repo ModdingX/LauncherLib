@@ -14,3 +14,4 @@ test/C mapped/CA
 		static
 		0 o0 firstA
 		1 o1 secondA
+	xx (I)V xa

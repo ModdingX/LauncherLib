@@ -88,7 +88,7 @@ public class MappingWriter extends MappingVisitor {
         
         private final IMappingBuilder.IClass cls;
         private final Map<String, FieldVisitor> fields;
-        private final Map<String, MethodVisitor> methods;
+        private final Map<MethodKey, MethodVisitor> methods;
         private final Set<String> metaKeys;
 
         public ClassVisitor(IMappingBuilder.IClass cls) {
@@ -119,7 +119,7 @@ public class MappingWriter extends MappingVisitor {
         @Override
         public MethodMappingVisitor visitMethod(String descriptor, String original, String mapped) {
             MappingWriter.this.ensureMutable();
-            return this.methods.computeIfAbsent(original, k -> new MethodVisitor(this.cls.method(descriptor, original, mapped)));
+            return this.methods.computeIfAbsent(new MethodKey(original, descriptor), k -> new MethodVisitor(this.cls.method(descriptor, original, mapped)));
         }
 
         @Override
@@ -215,5 +215,9 @@ public class MappingWriter extends MappingVisitor {
             // We allow this to be called multiple times
             MappingWriter.this.ensureMutable();
         }
+    }
+    
+    private record MethodKey(String name, String descriptor) {
+        
     }
 }
