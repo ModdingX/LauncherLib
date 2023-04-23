@@ -35,6 +35,8 @@ public class Launcher {
     }
     
     private final LauncherCache cache;
+    private String latestRelease = null;
+    private String latestSnapshot = null;
     private List<String> versions = null;
     private Map<String, LazyValue<VersionInfo>> versionInfo = null;
 
@@ -61,8 +63,12 @@ public class Launcher {
 
     private synchronized void initIfNeeded() {
         try {
-            if (this.versions == null || this.versionInfo == null) {
+            if (this.latestRelease == null || this.latestSnapshot == null || this.versions == null || this.versionInfo == null) {
                 JsonObject json = make(new URL(MANIFEST), j -> j);
+                JsonObject latest = json.getAsJsonObject("latest");
+                this.latestRelease = latest.get("release").getAsString();
+                this.latestSnapshot = latest.get("snapshot").getAsString();
+                
                 List<String> list = new ArrayList<>();
                 Map<String, LazyValue<VersionInfo>> table = new HashMap<>();
                 for (JsonElement entry : json.getAsJsonArray("versions")) {
@@ -79,6 +85,22 @@ public class Launcher {
         } catch (IOException e){
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Gets the latest release version.
+     */
+    public String latestRelease() {
+        this.initIfNeeded();
+        return this.latestRelease;
+    }
+    
+    /**
+     * Gets the latest snapshot version.
+     */
+    public String latestSnapshot() {
+        this.initIfNeeded();
+        return this.latestSnapshot;
     }
 
     /**
