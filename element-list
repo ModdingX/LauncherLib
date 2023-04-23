@@ -1,0 +1,7 @@
+org.moddingx.launcherlib.launcher
+org.moddingx.launcherlib.launcher.cache
+org.moddingx.launcherlib.mappings
+org.moddingx.launcherlib.mappings.visitor
+org.moddingx.launcherlib.nbt
+org.moddingx.launcherlib.nbt.tag
+org.moddingx.launcherlib.util
