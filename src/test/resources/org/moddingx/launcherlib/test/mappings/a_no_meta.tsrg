@@ -1,0 +1,14 @@
+tsrg2 from to
+test/A mapped/A
+	fa fma
+	fb fmb
+	mx (III)V my
+		0 o0 x
+		1 o1 y
+		2 o2 z
+test/C mapped/CA
+	ff fma
+	fa Ljava/lang/String; fi
+	mz (Ljava/lang/String;Ljava/lang/String;)I mz
+		0 o0 firstA
+		1 o1 secondA

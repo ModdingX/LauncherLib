@@ -1,0 +1,57 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group = 'org.moddingx'
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.minecraftforge.net/' }
+}
+
+dependencies {
+    api 'com.google.code.findbugs:jsr305:3.0.2'
+    api 'com.google.code.gson:gson:2.10'
+    api 'net.minecraftforge:srgutils:0.4.15'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier 'sources'
+    from sourceSets.main.allSource
+}
+build.dependsOn sourcesJar
+
+javadoc {
+    options.addStringOption("link", "https://docs.oracle.com/en/java/javase/17/docs/api/")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            pom {
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            url '../moddingx/maven'
+        }
+    }
+}

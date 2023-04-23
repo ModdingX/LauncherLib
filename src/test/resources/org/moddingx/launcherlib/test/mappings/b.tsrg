@@ -1,0 +1,10 @@
+tsrg2 from to
+test/B mapped/B
+	fc fmc
+	fd fmd
+test/C mapped/CB
+	ff fmb
+	fb Ljava/lang/String; fi
+	mz (Ljava/lang/String;Ljava/lang/String;)I mz
+		1 o1 secondB
+mapped/CA mapped/CAB

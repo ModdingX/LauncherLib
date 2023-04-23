@@ -1,0 +1,8 @@
+" ":{
+  list : [   [L;12,14,23,-44L,-17s]  ,    [   L; ]   ] , 
+  "bytes": [ B ; true, false, 14B, 13 ],
+  cmp:  {'a' :   1S,'"'  : "A test string", 12 : 0},
+  "\'cmp\'" : {"ints": [i;123,124,7  ,false]},
+  "dbl"   :2.0,
+  "f":1f
+}  

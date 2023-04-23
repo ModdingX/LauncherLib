@@ -1,0 +1,11 @@
+tsrg2 from to
+test/A mapped/A
+	fa fma
+	fb fmb
+	mx (III)V my
+		static
+test/C mapped/CA
+	ff fma
+	fa Ljava/lang/String; fi
+	mz (Ljava/lang/String;Ljava/lang/String;)I mz
+		static
