@@ -21,7 +21,7 @@ public class MappingWriter extends MappingVisitor {
     private IMappingFile result;
 
     public MappingWriter() {
-        this.builder = IMappingBuilder.create("from", "to");
+        this.builder = IMappingBuilder.create("left", "right");
         this.packages = new HashMap<>();
         this.classes = new HashMap<>();
         this.result = null;
@@ -57,7 +57,7 @@ public class MappingWriter extends MappingVisitor {
      * Gets the resulting mappings.
      */
     public IMappingFile result() {
-        if (this.result == null) this.result = this.builder.build().getMap("from", "to");
+        if (this.result == null) this.result = this.builder.build().getMap("left", "right");
         return this.result;
     }
 

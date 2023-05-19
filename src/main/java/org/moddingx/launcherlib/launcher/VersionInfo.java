@@ -12,6 +12,8 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -21,9 +23,11 @@ public class VersionInfo {
 
     private final LauncherCache cache;
     private final String id;
+    private final VersionType type;
+    private final Instant releaseTime;
     private final int java;
     private final URL client;
-    private final URL server;
+    @Nullable private final URL server; // Old versions have no server
     private final List<Library> libraries;
     private final LazyValue<AssetIndex> assets;
     @Nullable private final LazyValue<IMappingFile> clientMap;
@@ -31,48 +35,64 @@ public class VersionInfo {
     @Nullable private final LazyValue<IMappingFile> mergedMap;
 
     public VersionInfo(LauncherCache cache, JsonObject json, String id) throws IOException {
-        this.cache = cache;
-        this.id = id;
-        this.java = json.getAsJsonObject("javaVersion").get("majorVersion").getAsInt();
-        URL assetURL = new URL(json.getAsJsonObject("assetIndex").get("url").getAsString());
-        this.assets = new LazyValue<>(() -> Launcher.make(assetURL, j -> new AssetIndex(cache, j)));
-        JsonObject downloads = json.getAsJsonObject("downloads");
-        this.client = new URL(downloads.getAsJsonObject("client").get("url").getAsString());
-        this.server = new URL(downloads.getAsJsonObject("server").get("url").getAsString());
-        if (downloads.has("client_mappings") && downloads.has("server_mappings")) {
-            URL clientMapUrl = new URL(downloads.getAsJsonObject("client_mappings").get("url").getAsString());
-            this.clientMap = new LazyValue<>(() -> this.loadMappings("client", clientMapUrl));
-            URL serverMapUrl = new URL(downloads.getAsJsonObject("server_mappings").get("url").getAsString());
-            this.serverMap = new LazyValue<>(() -> this.loadMappings("server", serverMapUrl));
-            this.mergedMap = new LazyValue<>(() -> MappingHelper.merge(this.clientMap.get(), this.serverMap.get()));
-        } else {
-            this.clientMap = null;
-            this.serverMap = null;
-            this.mergedMap = null;
-        }
-        List<Library> libraries = new ArrayList<>();
-        for (JsonElement lib : json.getAsJsonArray("libraries")) {
-            JsonObject download = lib.getAsJsonObject();
-            Set<String> os = null;
-            if (download.has("rules")) {
-                JsonArray rules = download.getAsJsonArray("rules");
-                if (!rules.isEmpty()) {
-                    os = new HashSet<>();
-                    for (JsonElement ruleElem : rules) {
-                        JsonObject rule = ruleElem.getAsJsonObject();
-                        if (rule.has("os") && rule.getAsJsonObject("os").has("name")
-                                && "allow".equals(rule.get("action").getAsString())) {
-                            os.add(rule.getAsJsonObject("os").get("name").getAsString());
+        try {
+            this.cache = cache;
+            this.id = id;
+            this.type = VersionType.get(json.get("type").getAsString());
+            this.releaseTime = Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(json.get("releaseTime").getAsString()));
+            if (MANUAL_JAVA_MAP.containsKey(id)) {
+                this.java = MANUAL_JAVA_MAP.get(id);
+            } else {
+                this.java = json.getAsJsonObject("javaVersion").get("majorVersion").getAsInt();
+            }
+            URL assetURL = new URL(json.getAsJsonObject("assetIndex").get("url").getAsString());
+            this.assets = new LazyValue<>(() -> Launcher.make(assetURL, j -> new AssetIndex(cache, j)));
+            JsonObject downloads = json.getAsJsonObject("downloads");
+            this.client = new URL(downloads.getAsJsonObject("client").get("url").getAsString());
+            if (downloads.has("server")) {
+                this.server = new URL(downloads.getAsJsonObject("server").get("url").getAsString());
+            } else {
+                this.server = null;
+            }
+            if (downloads.has("client_mappings") && downloads.has("server_mappings")) {
+                URL clientMapUrl = new URL(downloads.getAsJsonObject("client_mappings").get("url").getAsString());
+                this.clientMap = new LazyValue<>(() -> this.loadMappings("client", clientMapUrl));
+                URL serverMapUrl = new URL(downloads.getAsJsonObject("server_mappings").get("url").getAsString());
+                this.serverMap = new LazyValue<>(() -> this.loadMappings("server", serverMapUrl));
+                this.mergedMap = new LazyValue<>(() -> MappingHelper.merge(this.clientMap.get(), this.serverMap.get()));
+            } else {
+                this.clientMap = null;
+                this.serverMap = null;
+                this.mergedMap = null;
+            }
+            List<Library> libraries = new ArrayList<>();
+            for (JsonElement lib : json.getAsJsonArray("libraries")) {
+                JsonObject download = lib.getAsJsonObject();
+                Set<String> os = null;
+                if (download.has("rules")) {
+                    JsonArray rules = download.getAsJsonArray("rules");
+                    if (!rules.isEmpty()) {
+                        os = new HashSet<>();
+                        for (JsonElement ruleElem : rules) {
+                            JsonObject rule = ruleElem.getAsJsonObject();
+                            if (rule.has("os") && rule.getAsJsonObject("os").has("name")
+                                    && "allow".equals(rule.get("action").getAsString())) {
+                                os.add(rule.getAsJsonObject("os").get("name").getAsString());
+                            }
                         }
                     }
                 }
+                String key = download.get("name").getAsString();
+                if (!download.getAsJsonObject("downloads").has("classifiers")) { // LWJGL natives on old versions, unsupported
+                    String path = download.getAsJsonObject("downloads").getAsJsonObject("artifact").get("path").getAsString();
+                    URL url = new URL(download.getAsJsonObject("downloads").getAsJsonObject("artifact").get("url").getAsString());
+                    libraries.add(new Library(this.cache, key, path, url, os));
+                }
             }
-            String key = download.get("name").getAsString();
-            String path = download.getAsJsonObject("downloads").getAsJsonObject("artifact").get("path").getAsString();
-            URL url = new URL(download.getAsJsonObject("downloads").getAsJsonObject("artifact").get("url").getAsString());
-            libraries.add(new Library(this.cache, key, path, url, os));
+            this.libraries = List.copyOf(libraries);
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to parse version information for " + id, e);
         }
-        this.libraries = List.copyOf(libraries);
     }
 
     private IMappingFile loadMappings(String key, URL url) {
@@ -92,6 +112,20 @@ public class VersionInfo {
     }
 
     /**
+     * Gets the type of this minecraft version.
+     */
+    public VersionType type() {
+        return this.type;
+    }
+
+    /**
+     * Gets the release time of this minecraft version.
+     */
+    public Instant releaseTime() {
+        return this.releaseTime;
+    }
+    
+    /**
      * Gets the java version required to run this minecraft version.
      */
     public int java() {
@@ -109,6 +143,7 @@ public class VersionInfo {
      * Downloads the server.
      */
     public InputStream server() throws IOException {
+        if (this.server == null) throw new NoSuchElementException("No server available for version " + this.id);
         return this.cache.downloadVersion(this.id, "server", this.server);
     }
 
@@ -154,5 +189,30 @@ public class VersionInfo {
     public IMappingFile mergedMap() {
         if (this.mergedMap == null) throw new NoSuchElementException("No mappings available for version " + this.id);
         return this.mergedMap.get();
+    }
+
+    // At the time of writing, versions from 13w24a to 13w38c have no java version set in the metadata
+    private static final Map<String, Integer> MANUAL_JAVA_MAP;
+    static {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("13w24a", 8);
+        map.put("13w24b", 8);
+        map.put("13w25a", 8);
+        map.put("13w25b", 8);
+        map.put("13w25c", 8);
+        map.put("13w26a", 8);
+        map.put("1.6", 8);
+        map.put("1.6.1", 8);
+        map.put("1.6.2", 8);
+        map.put("13w36a", 8);
+        map.put("13w36b", 8);
+        map.put("13w37a", 8);
+        map.put("1.6.3", 8);
+        map.put("13w37b", 8);
+        map.put("1.6.4", 8);
+        map.put("13w38a", 8);
+        map.put("13w38b", 8);
+        map.put("13w38c", 8);
+        MANUAL_JAVA_MAP = Map.copyOf(map);
     }
 }
