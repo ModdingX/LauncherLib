@@ -83,6 +83,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public enum </span><span class="element-name type-name-label">VersionType</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;<a href="VersionType.html" title="enum class in org.moddingx.launcherlib.launcher">VersionType</a>&gt;</span></div>
+<div class="block">A minecraft version type.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -104,13 +105,21 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Enum Constant</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="#ALPHA" class="member-name-link">ALPHA</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">The <code>old_alpha</code> version type.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="#BETA" class="member-name-link">BETA</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">The <code>old_beta</code> version type.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="#RELEASE" class="member-name-link">RELEASE</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">The <code>release</code> version type.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="#SNAPSHOT" class="member-name-link">SNAPSHOT</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">The <code>snapshot</code> version type.</div>
+</div>
 </div>
 </section>
 </li>
@@ -127,7 +136,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="VersionType.html" title="enum class in org.moddingx.launcherlib.launcher">VersionType</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#get(java.lang.String)" class="member-name-link">get</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Gets a version type by id.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="VersionType.html" title="enum class in org.moddingx.launcherlib.launcher">VersionType</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -163,24 +174,28 @@ the order they are declared.</div>
 <section class="detail" id="ALPHA">
 <h3>ALPHA</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="VersionType.html" title="enum class in org.moddingx.launcherlib.launcher">VersionType</a></span>&nbsp;<span class="element-name">ALPHA</span></div>
+<div class="block">The <code>old_alpha</code> version type.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="BETA">
 <h3>BETA</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="VersionType.html" title="enum class in org.moddingx.launcherlib.launcher">VersionType</a></span>&nbsp;<span class="element-name">BETA</span></div>
+<div class="block">The <code>old_beta</code> version type.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="SNAPSHOT">
 <h3>SNAPSHOT</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="VersionType.html" title="enum class in org.moddingx.launcherlib.launcher">VersionType</a></span>&nbsp;<span class="element-name">SNAPSHOT</span></div>
+<div class="block">The <code>snapshot</code> version type.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="RELEASE">
 <h3>RELEASE</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="VersionType.html" title="enum class in org.moddingx.launcherlib.launcher">VersionType</a></span>&nbsp;<span class="element-name">RELEASE</span></div>
+<div class="block">The <code>release</code> version type.</div>
 </section>
 </li>
 </ul>
@@ -226,6 +241,7 @@ not permitted.)</div>
 <section class="detail" id="get(java.lang.String)">
 <h3>get</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="VersionType.html" title="enum class in org.moddingx.launcherlib.launcher">VersionType</a></span>&nbsp;<span class="element-name">get</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
+<div class="block">Gets a version type by id.</div>
 </section>
 </li>
 </ul>
