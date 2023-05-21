@@ -2,6 +2,7 @@ package org.moddingx.launcherlib.util;
 
 import javax.annotation.Nullable;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Marks a physical side for a mod to be placed in.
@@ -84,11 +85,11 @@ public enum Side {
             if (side.client) client = true;
             if (side.server) server = true;
         }
-        return get(client, server);
+        return Objects.requireNonNullElse(get(client, server), Side.COMMON);
     }
 
     /**
-     * Ads multiple {@link Side}s. This can be used to determine the required ide for transitive dependencies.
+     * Adds multiple {@link Side}s. This can be used to determine the required side for transitive dependencies.
      * Suppose a mod {@code A} is installed on side {@code sideA} and has a dependency for side {@code sideB}.
      * {@code and(sideA, sideB)} would then be the side, on which the dependency is required.
      * <p>
