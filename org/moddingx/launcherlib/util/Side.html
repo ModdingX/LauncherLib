@@ -160,7 +160,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#and(org.moddingx.launcherlib.util.Side...)" class="member-name-link">and</a><wbr>(<a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a>...&nbsp;sides)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Ads multiple <a href="Side.html" title="enum class in org.moddingx.launcherlib.util"><code>Side</code></a>s.</div>
+<div class="block">Adds multiple <a href="Side.html" title="enum class in org.moddingx.launcherlib.util"><code>Side</code></a>s.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#byId(java.lang.String)" class="member-name-link">byId</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
@@ -335,7 +335,7 @@ not permitted.)</div>
 <h3>and</h3>
 <div class="member-signature"><span class="annotations">@Nullable
 </span><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a></span>&nbsp;<span class="element-name">and</span><wbr><span class="parameters">(<a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a>...&nbsp;sides)</span></div>
-<div class="block">Ads multiple <a href="Side.html" title="enum class in org.moddingx.launcherlib.util"><code>Side</code></a>s. This can be used to determine the required ide for transitive dependencies.
+<div class="block">Adds multiple <a href="Side.html" title="enum class in org.moddingx.launcherlib.util"><code>Side</code></a>s. This can be used to determine the required side for transitive dependencies.
  Suppose a mod <code>A</code> is installed on side <code>sideA</code> and has a dependency for side <code>sideB</code>.
  <code>and(sideA, sideB)</code> would then be the side, on which the dependency is required.
  <p>
