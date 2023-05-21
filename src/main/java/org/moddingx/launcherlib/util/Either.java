@@ -8,7 +8,7 @@ import java.util.function.Supplier;
  * An {@link Either} is always either an instance of {@link Either.Left} or {@link Either.Right} effectively
  * giving a union type of two other types.
  */
-public interface Either<A, B> {
+public sealed interface Either<A, B> permits Either.Left, Either.Right {
 
     /**
      * Gets the left value of this {@link Either} if this is a {@link Left}.
