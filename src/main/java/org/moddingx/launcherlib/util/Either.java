@@ -59,20 +59,7 @@ public sealed interface Either<A, B> permits Either.Left, Either.Right {
     /**
      * Gets a value from this {@link Either} if it is a {@link Left} or throws an exception if it is a {@link Right}.
      */
-    default <T> T getOrThrow(Function<A, T> funcA, Function<B, ? extends RuntimeException> funcB) {
-        Optional<A> a = this.left();
-        if (a.isPresent()) {
-            return funcA.apply(a.get());
-        } else {
-            //noinspection OptionalGetWithoutIsPresent
-            throw funcB.apply(this.right().get());
-        }
-    }
-    
-    /**
-     * Gets a value from this {@link Either} if it is a {@link Left} or throws an exception if it is a {@link Right}.
-     */
-    default <T, E extends Throwable> T getOrThrowChecked(Function<A, T> funcA, Function<B, E> funcB) throws E {
+    default <T, E extends Throwable> T getOrThrow(Function<A, T> funcA, Function<B, ? extends E> funcB) throws E {
         Optional<A> a = this.left();
         if (a.isPresent()) {
             return funcA.apply(a.get());
