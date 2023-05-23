@@ -194,7 +194,7 @@ public class MappingWriter extends MappingVisitor {
         }
     }
 
-    private  class ParameterVisitor extends ParameterMappingVisitor {
+    private class ParameterVisitor extends ParameterMappingVisitor {
 
         private final IMappingBuilder.IParameter param;
         private final Set<String> metaKeys;
