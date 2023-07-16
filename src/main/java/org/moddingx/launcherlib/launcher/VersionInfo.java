@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import net.minecraftforge.srgutils.IMappingFile;
 import org.moddingx.launcherlib.launcher.cache.LauncherCache;
 import org.moddingx.launcherlib.mappings.MappingHelper;
+import org.moddingx.launcherlib.util.Artifact;
 import org.moddingx.launcherlib.util.LazyValue;
 
 import javax.annotation.Nullable;
@@ -85,8 +86,9 @@ public class VersionInfo {
                 String key = download.get("name").getAsString();
                 if (!download.getAsJsonObject("downloads").has("classifiers")) { // LWJGL natives on old versions, unsupported
                     String path = download.getAsJsonObject("downloads").getAsJsonObject("artifact").get("path").getAsString();
+                    Artifact artifact = Artifact.from(key);
                     URL url = new URL(download.getAsJsonObject("downloads").getAsJsonObject("artifact").get("url").getAsString());
-                    libraries.add(new Library(this.cache, key, path, url, os));
+                    libraries.add(new Library(this.cache, key, path, artifact, url, os));
                 }
             }
             this.libraries = List.copyOf(libraries);

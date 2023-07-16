@@ -1,6 +1,7 @@
 package org.moddingx.launcherlib.launcher;
 
 import org.moddingx.launcherlib.launcher.cache.LauncherCache;
+import org.moddingx.launcherlib.util.Artifact;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
@@ -21,15 +22,17 @@ public class Library {
     private final LauncherCache cache;
     private final String key;
     private final String path;
+    private final Artifact artifact;
     private final URL url;
     
     @Nullable
     private final Set<String> os;
 
-    public Library(LauncherCache cache, String key, String path, URL url, @Nullable Set<String> os) {
+    public Library(LauncherCache cache, String key, String path, Artifact artifact, URL url, @Nullable Set<String> os) {
         this.cache = cache;
         this.key = key;
         this.path = path;
+        this.artifact = artifact;
         this.url = url;
         this.os = os == null ? null : os.stream().map(str -> str.toLowerCase(Locale.ROOT)).collect(Collectors.toUnmodifiableSet());
     }
@@ -46,6 +49,13 @@ public class Library {
      */
     public String path() {
         return this.path;
+    }
+    
+    /**
+     * Gets the artifact, this library describes.
+     */
+    public Artifact artifact() {
+        return this.artifact;
     }
     
     /**

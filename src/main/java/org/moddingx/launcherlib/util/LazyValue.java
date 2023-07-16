@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 /**
  * A lazy value that is initialised when first needed.
  */
-public class LazyValue<T> {
+public final class LazyValue<T> {
     
     private final Object lock;
     private volatile Supplier<? extends T> supplier;
