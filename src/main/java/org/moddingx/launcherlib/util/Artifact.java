@@ -193,8 +193,7 @@ public final class Artifact implements Comparable<Artifact>, Serializable {
     private static final Comparator<String> STRING_COMPARATOR = Comparator.nullsFirst(Comparator.naturalOrder());
     private static final Comparator<Object> VERSION_PART_COMPARATOR = (a, b) -> {
         if (a instanceof Long n1 && b instanceof Long n2) return Long.compare(n1, n2);
-        if (a instanceof String s1 && b instanceof String s2) return s1.compareTo(s2);
-        return 0;
+        return Objects.toString(a).compareTo(Objects.toString(b));
     };
     private static final Comparator<Object[]> VERSION_COMPARATOR = (a, b) -> Arrays.compare(a, b, VERSION_PART_COMPARATOR);
     
