@@ -1,7 +1,7 @@
 package org.moddingx.launcherlib.mappings;
 
-import net.minecraftforge.srgutils.IMappingBuilder;
-import net.minecraftforge.srgutils.IMappingFile;
+import net.neoforged.srgutils.IMappingBuilder;
+import net.neoforged.srgutils.IMappingFile;
 import org.moddingx.launcherlib.mappings.visitor.*;
 
 import javax.annotation.Nullable;

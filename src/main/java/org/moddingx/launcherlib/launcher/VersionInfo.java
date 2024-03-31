@@ -3,7 +3,7 @@ package org.moddingx.launcherlib.launcher;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraftforge.srgutils.IMappingFile;
+import net.neoforged.srgutils.IMappingFile;
 import org.moddingx.launcherlib.launcher.cache.LauncherCache;
 import org.moddingx.launcherlib.mappings.MappingHelper;
 import org.moddingx.launcherlib.util.Artifact;

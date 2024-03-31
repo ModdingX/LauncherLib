@@ -1,7 +1,7 @@
 package org.moddingx.launcherlib.mappings;
 
-import net.minecraftforge.srgutils.IMappingBuilder;
-import net.minecraftforge.srgutils.IMappingFile;
+import net.neoforged.srgutils.IMappingBuilder;
+import net.neoforged.srgutils.IMappingFile;
 import org.moddingx.launcherlib.mappings.visitor.*;
 
 import javax.annotation.Nullable;
@@ -75,7 +75,7 @@ public class MappingHelper {
      * set. Mappings that occur earlier in the given list replace mappings that are found later.
      */
     public static IMappingFile merge(List<IMappingFile> mappings) {
-        if (mappings.size() == 0) {
+        if (mappings.isEmpty()) {
             return IMappingBuilder.create("left", "right").build().getMap("left", "right");
         } else if (mappings.size() == 1) {
             return mappings.get(0);
