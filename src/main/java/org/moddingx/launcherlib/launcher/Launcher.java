@@ -10,11 +10,12 @@ import org.moddingx.launcherlib.launcher.cache.PathCache;
 import org.moddingx.launcherlib.util.IoFunction;
 import org.moddingx.launcherlib.util.LazyValue;
 
-import javax.annotation.WillClose;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.*;
@@ -26,7 +27,7 @@ import java.util.*;
  */
 public class Launcher {
 
-    private static final String MANIFEST = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json";
+    private static final URI MANIFEST = URI.create("https://piston-meta.mojang.com/mc/game/version_manifest_v2.json");
     private static final Gson GSON;    
     static {
         GsonBuilder builder = new GsonBuilder();
@@ -64,7 +65,7 @@ public class Launcher {
     private synchronized void initIfNeeded() {
         try {
             if (this.latestRelease == null || this.latestSnapshot == null || this.versions == null || this.versionInfo == null) {
-                JsonObject json = make(new URL(MANIFEST), j -> j);
+                JsonObject json = make(MANIFEST.toURL(), j -> j);
                 JsonObject latest = json.getAsJsonObject("latest");
                 this.latestRelease = latest.get("release").getAsString();
                 this.latestSnapshot = latest.get("snapshot").getAsString();
@@ -73,7 +74,7 @@ public class Launcher {
                 Map<String, LazyValue<VersionInfo>> table = new HashMap<>();
                 for (JsonElement entry : json.getAsJsonArray("versions")) {
                     String key = entry.getAsJsonObject().get("id").getAsString();
-                    URL url = new URL(entry.getAsJsonObject().get("url").getAsString());
+                    URL url = new URI(entry.getAsJsonObject().get("url").getAsString()).toURL();
                     
                     list.add(key);
                     table.put(key, new LazyValue<>(() -> make(url, j -> new VersionInfo(this.cache, j, key))));
@@ -82,7 +83,7 @@ public class Launcher {
                 this.versions = List.copyOf(list);
                 this.versionInfo = Map.copyOf(table);
             }
-        } catch (IOException e){
+        } catch (IOException | URISyntaxException e){
             throw new RuntimeException(e);
         }
     }
@@ -128,7 +129,7 @@ public class Launcher {
         }
     }
     
-    public static <T> T make(@WillClose InputStream in, IoFunction<JsonObject, T> factory) {
+    public static <T> T make(InputStream in, IoFunction<JsonObject, T> factory) {
         try (InputStream inStream = in; Reader reader = new InputStreamReader(inStream)) {
             return factory.apply(GSON.fromJson(reader, JsonObject.class));
         } catch (IOException e) {

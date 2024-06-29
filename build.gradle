@@ -4,20 +4,19 @@ plugins {
 }
 
 group = 'org.moddingx'
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 repositories {
     mavenCentral()
-    maven { url = 'https://maven.minecraftforge.net/' }
 }
 
 dependencies {
-    api 'com.google.code.findbugs:jsr305:3.0.2'
-    api 'com.google.code.gson:gson:2.10.1'
-    api 'net.minecraftforge:srgutils:0.5.4'
+    api 'org.jetbrains:annotations:24.1.0'
+    api 'com.google.code.gson:gson:2.11.0'
+    api 'net.neoforged:srgutils:1.0.9'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.3'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.3'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -27,7 +26,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 build.dependsOn sourcesJar
 
 javadoc {
-    options.addStringOption("link", "https://docs.oracle.com/en/java/javase/17/docs/api/")
+    options.addStringOption("link", "https://docs.oracle.com/en/java/javase/21/docs/api/")
 }
 
 test {
@@ -51,7 +50,9 @@ publishing {
     }
     repositories {
         maven {
-            url '../moddingx/maven'
+            name 'moddingx'
+            url 'https://maven.moddingx.org/release'
+            credentials(PasswordCredentials)
         }
     }
 }

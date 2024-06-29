@@ -2,8 +2,6 @@ package org.moddingx.launcherlib.nbt;
 
 import org.moddingx.launcherlib.nbt.tag.*;
 
-import javax.annotation.WillClose;
-import javax.annotation.WillNotClose;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,9 +28,9 @@ public class SNBT {
     }
     
     /**
-     * Reads SNBT from the given {@link Reader}.
+     * Reads SNBT from the given {@link Reader}. This will {@link Reader#close() close} the reader.
      */
-    public static Tag read(@WillClose Reader in) throws IOException {
+    public static Tag read(Reader in) throws IOException {
         try (in; TagReader input = new TagReader(in)) {
             input.skipSpace();
             // Some SNBT files include the explicit empty tag part from binary NBT which we ignore here.
@@ -66,24 +64,24 @@ public class SNBT {
     }
     
     /**
-     * Writes SNBT to the given {@link Writer}.
+     * Writes SNBT to the given {@link Writer}. This will {@link Writer#close() close} the writer.
      */
-    public static void write(Tag tag, @WillClose Writer out) throws IOException {
+    public static void write(Tag tag, Writer out) throws IOException {
         write(tag, out, false);
     }
     
     /**
-     * Writes SNBT to the given {@link Writer}.
+     * Writes SNBT to the given {@link Writer}. This will {@link Writer#close() close} the writer.
      * 
      * @param pretty Whether the SNBT should be pretty-printed.
      */
-    public static void write(Tag tag, @WillClose Writer out, boolean pretty) throws IOException {
+    public static void write(Tag tag, Writer out, boolean pretty) throws IOException {
         try (out; BufferedWriter theWriter = new BufferedWriter(out)) {
             writeTag(tag, theWriter, pretty, "");
         }
     }
     
-    private static Tag readTag(@WillNotClose TagReader in) throws IOException {
+    private static Tag readTag(TagReader in) throws IOException {
         in.skipSpace();
         Tag result = switch (in.next()) {
             case '[' -> readListLike(in);
@@ -97,7 +95,7 @@ public class SNBT {
         return result;
     }
 
-    private static Tag readAtom(@WillNotClose TagReader in, boolean forceString) throws IOException {
+    private static Tag readAtom(TagReader in, boolean forceString) throws IOException {
         in.skipSpace();
         return switch (in.next()) {
             case '"' -> new StringTag(in.readUntil('"', true));
@@ -158,7 +156,7 @@ public class SNBT {
         };
     }
 
-    private static Tag readListLike(@WillNotClose TagReader in) throws IOException {
+    private static Tag readListLike(TagReader in) throws IOException {
         in.skipSpace();
         return switch (in.next(2, true)) {
             case "b;", "B;" -> new ByteArrayTag(readArray(in, "Byte", NumberTag::asByte));
@@ -171,7 +169,7 @@ public class SNBT {
         };
     }
 
-    private static <T> List<T> readArray(@WillNotClose TagReader in, String content, Function<NumberTag, T> extract) throws IOException {
+    private static <T> List<T> readArray(TagReader in, String content, Function<NumberTag, T> extract) throws IOException {
         in.skipSpace();
         List<Tag> tags = readList(in);
         List<T> list = new ArrayList<>();
@@ -182,7 +180,7 @@ public class SNBT {
         return list;
     }
 
-    private static List<Tag> readList(@WillNotClose TagReader in) throws IOException {
+    private static List<Tag> readList(TagReader in) throws IOException {
         List<Tag> tags = new ArrayList<>();
         while (true) {
             in.skipSpace();
@@ -198,7 +196,7 @@ public class SNBT {
         }
     }
 
-    private static Tag readCompound(@WillNotClose TagReader in) throws IOException {
+    private static Tag readCompound(TagReader in) throws IOException {
         Map<String, Tag> tags = new HashMap<>();
         while (true) {
             in.skipSpace();
@@ -221,7 +219,7 @@ public class SNBT {
         }
     }
 
-    private static void writeTag(Tag tag, @WillNotClose Writer out, boolean pretty, String indent) throws IOException {
+    private static void writeTag(Tag tag, Writer out, boolean pretty, String indent) throws IOException {
         switch (tag.type()) {
             case BYTE -> {
                 out.write(Byte.toString(((NumberTag) tag).asByte()));

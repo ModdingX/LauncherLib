@@ -2,7 +2,6 @@ package org.moddingx.launcherlib.nbt;
 
 import org.moddingx.launcherlib.nbt.tag.*;
 
-import javax.annotation.WillClose;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,16 +18,16 @@ import java.util.zip.GZIPOutputStream;
 public class NBT {
 
     /**
-     * Reads GZIP compressed NBT from the given {@link InputStream}.
+     * Reads GZIP compressed NBT from the given {@link InputStream}. This will {@link InputStream#close() close} the stream.
      */
-    public static Tag read(@WillClose InputStream in) throws IOException {
+    public static Tag read(InputStream in) throws IOException {
         return read(in, Compression.GZIP);
     }
     
     /**
-     * Reads NBT from the given {@link InputStream}.
+     * Reads NBT from the given {@link InputStream}. This will {@link InputStream#close() close} the stream.
      */
-    public static Tag read(@WillClose InputStream in, Compression compression) throws IOException {
+    public static Tag read(InputStream in, Compression compression) throws IOException {
         try (in; DataInputStream input = switch (compression) {
             case NONE -> in instanceof DataInputStream di ? di : (in instanceof BufferedInputStream ? new DataInputStream(in) : new DataInputStream(new BufferedInputStream(in)));
             case GZIP -> new DataInputStream(new BufferedInputStream(new GZIPInputStream(in)));
@@ -41,16 +40,16 @@ public class NBT {
     }
     
     /**
-     * Writes GZIP compressed NBT to the given {@link OutputStream}.
+     * Writes GZIP compressed NBT to the given {@link OutputStream}. This will {@link OutputStream#close() close} the stream.
      */
-    public static void write(Tag tag, @WillClose OutputStream out) throws IOException {
+    public static void write(Tag tag, OutputStream out) throws IOException {
         write(tag, out, Compression.GZIP);
     }
     
     /**
-     * Writes NBT to the given {@link OutputStream}.
+     * Writes NBT to the given {@link OutputStream}. This will {@link OutputStream#close() close} the stream.
      */
-    public static void write(Tag tag, @WillClose OutputStream out, Compression compression) throws IOException {
+    public static void write(Tag tag, OutputStream out, Compression compression) throws IOException {
         try (out; DataOutputStream output = switch (compression) {
             case NONE -> out instanceof DataOutputStream dd ? dd : (out instanceof BufferedOutputStream ? new DataOutputStream(out) : new DataOutputStream(new BufferedOutputStream(out)));
             case GZIP -> new DataOutputStream(new BufferedOutputStream(new GZIPOutputStream(out)));
@@ -109,7 +108,7 @@ public class NBT {
             String key = input.readUTF();
             Tag value = readTag(type, input);
             if (single) {
-                if ("".equals(key)) return value;
+                if (key.isEmpty()) return value;
                 tags.put(key, value);
                 return new CompoundTag(tags);
             } else {

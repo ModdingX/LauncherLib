@@ -3,15 +3,17 @@ package org.moddingx.launcherlib.launcher;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraftforge.srgutils.IMappingFile;
+import net.neoforged.srgutils.IMappingFile;
+import org.jetbrains.annotations.Nullable;
 import org.moddingx.launcherlib.launcher.cache.LauncherCache;
 import org.moddingx.launcherlib.mappings.MappingHelper;
 import org.moddingx.launcherlib.util.Artifact;
 import org.moddingx.launcherlib.util.LazyValue;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
@@ -46,19 +48,19 @@ public class VersionInfo {
             } else {
                 this.java = json.getAsJsonObject("javaVersion").get("majorVersion").getAsInt();
             }
-            URL assetURL = new URL(json.getAsJsonObject("assetIndex").get("url").getAsString());
+            URL assetURL = new URI(json.getAsJsonObject("assetIndex").get("url").getAsString()).toURL();
             this.assets = new LazyValue<>(() -> Launcher.make(assetURL, j -> new AssetIndex(cache, j)));
             JsonObject downloads = json.getAsJsonObject("downloads");
-            this.client = new URL(downloads.getAsJsonObject("client").get("url").getAsString());
+            this.client = new URI(downloads.getAsJsonObject("client").get("url").getAsString()).toURL();
             if (downloads.has("server")) {
-                this.server = new URL(downloads.getAsJsonObject("server").get("url").getAsString());
+                this.server = new URI(downloads.getAsJsonObject("server").get("url").getAsString()).toURL();
             } else {
                 this.server = null;
             }
             if (downloads.has("client_mappings") && downloads.has("server_mappings")) {
-                URL clientMapUrl = new URL(downloads.getAsJsonObject("client_mappings").get("url").getAsString());
+                URL clientMapUrl = new URI(downloads.getAsJsonObject("client_mappings").get("url").getAsString()).toURL();
                 this.clientMap = new LazyValue<>(() -> this.loadMappings("client", clientMapUrl));
-                URL serverMapUrl = new URL(downloads.getAsJsonObject("server_mappings").get("url").getAsString());
+                URL serverMapUrl = new URI(downloads.getAsJsonObject("server_mappings").get("url").getAsString()).toURL();
                 this.serverMap = new LazyValue<>(() -> this.loadMappings("server", serverMapUrl));
                 this.mergedMap = new LazyValue<>(() -> MappingHelper.merge(this.clientMap.get(), this.serverMap.get()));
             } else {
@@ -87,11 +89,13 @@ public class VersionInfo {
                 if (!download.getAsJsonObject("downloads").has("classifiers")) { // LWJGL natives on old versions, unsupported
                     String path = download.getAsJsonObject("downloads").getAsJsonObject("artifact").get("path").getAsString();
                     Artifact artifact = Artifact.from(key);
-                    URL url = new URL(download.getAsJsonObject("downloads").getAsJsonObject("artifact").get("url").getAsString());
+                    URL url = new URI(download.getAsJsonObject("downloads").getAsJsonObject("artifact").get("url").getAsString()).toURL();
                     libraries.add(new Library(this.cache, key, path, artifact, url, os));
                 }
             }
             this.libraries = List.copyOf(libraries);
+        } catch (URISyntaxException e) {
+            throw new IOException(e);
         } catch (Exception e) {
             throw new IllegalStateException("Failed to parse version information for " + id, e);
         }

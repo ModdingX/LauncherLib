@@ -39,12 +39,12 @@ public final class ListTag extends ArrayTag<Tag> {
     }
     
     private void updateElementType() {
-        if (this.elements.size() == 0) {
+        if (this.elements.isEmpty()) {
             this.elementType = TagType.END;
         } else {
             List<TagType> allTypes = this.elements.stream().map(Tag::type).distinct().toList();
             if (allTypes.size() == 1) {
-                this.elementType = allTypes.get(0);
+                this.elementType = allTypes.getFirst();
             } else {
                 throw new IllegalArgumentException("List of different tag types: " + allTypes.stream().map(TagType::name).collect(Collectors.joining(", ")));
             }

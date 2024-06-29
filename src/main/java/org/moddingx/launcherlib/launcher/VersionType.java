@@ -36,7 +36,7 @@ public enum VersionType {
             case "beta", "old_beta" -> BETA;
             case "snapshot" -> SNAPSHOT;
             case "release" -> RELEASE;
-            default -> throw new IllegalArgumentException("Invalid verion type: '" + id + "'");
+            default -> throw new IllegalArgumentException("Invalid version type: '" + id + "'");
         };
     }
 }

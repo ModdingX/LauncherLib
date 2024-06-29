@@ -1,10 +1,10 @@
 package org.moddingx.launcherlib.mappings;
 
-import net.minecraftforge.srgutils.IMappingBuilder;
-import net.minecraftforge.srgutils.IMappingFile;
+import net.neoforged.srgutils.IMappingBuilder;
+import net.neoforged.srgutils.IMappingFile;
+import org.jetbrains.annotations.Nullable;
 import org.moddingx.launcherlib.mappings.visitor.*;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 /**
@@ -107,7 +107,7 @@ public class MappingWriter extends MappingVisitor {
                 return new FieldVisitor(fd, mapped);
             });
             if (!fv.hasDescriptor && Objects.equals(mapped, fv.mapped)) {
-                // If we map the same field to the same name again but incldue a descriptor at a later point,
+                // If we map the same field to the same name again but include a descriptor at a later point,
                 // use that descriptor.
                 fv.fd.descriptor(descriptor);
                 fv.hasDescriptor = true;

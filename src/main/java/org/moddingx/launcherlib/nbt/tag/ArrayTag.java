@@ -1,9 +1,9 @@
 package org.moddingx.launcherlib.nbt.tag;
 
+import org.jetbrains.annotations.NotNull;
 import org.moddingx.launcherlib.nbt.SNBT;
 import org.moddingx.launcherlib.nbt.TagType;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -105,23 +105,23 @@ public abstract sealed class ArrayTag<T> implements Tag, Iterable<T> permits Byt
         this.elements.clear();
     }
     
-    @Nonnull
+    @NotNull
     @Override
     public Iterator<T> iterator() {
         return this.elements.iterator();
     }
     
-    @Nonnull
+    @NotNull
     public ListIterator<T> listIterator() {
         return this.elements.listIterator();
     }
     
-    @Nonnull
+    @NotNull
     public ListIterator<T> listIterator(int idx) {
         return this.elements.listIterator(idx);
     }
     
-    @Nonnull
+    @NotNull
     public Stream<T> stream() {
         return this.elements.stream();
     }

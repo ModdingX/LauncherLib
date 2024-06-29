@@ -1,9 +1,9 @@
 package org.moddingx.launcherlib.launcher;
 
+import org.jetbrains.annotations.Nullable;
 import org.moddingx.launcherlib.launcher.cache.LauncherCache;
 import org.moddingx.launcherlib.util.Artifact;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;

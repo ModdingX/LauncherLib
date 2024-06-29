@@ -1,6 +1,6 @@
 package org.moddingx.launcherlib.test.mappings;
 
-import net.minecraftforge.srgutils.IMappingFile;
+import net.neoforged.srgutils.IMappingFile;
 import org.junit.jupiter.api.Test;
 import org.moddingx.launcherlib.mappings.MappingHelper;
 

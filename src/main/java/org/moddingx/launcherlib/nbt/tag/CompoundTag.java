@@ -1,9 +1,9 @@
 package org.moddingx.launcherlib.nbt.tag;
 
+import org.jetbrains.annotations.NotNull;
 import org.moddingx.launcherlib.nbt.SNBT;
 import org.moddingx.launcherlib.nbt.TagType;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -220,13 +220,13 @@ public final class CompoundTag implements Tag, Iterable<Map.Entry<String, Tag>> 
         this.put(key, new StringTag(value));
     }
     
-    @Nonnull
+    @NotNull
     @Override
     public Iterator<Map.Entry<String, Tag>> iterator() {
         return this.elements.entrySet().iterator();
     }
     
-    @Nonnull
+    @NotNull
     public Stream<Map.Entry<String, Tag>> stream() {
         return this.elements.entrySet().stream();
     }
