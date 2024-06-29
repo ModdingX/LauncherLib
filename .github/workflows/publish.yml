@@ -23,6 +23,8 @@ jobs:
           -PmoddingxUsername=${{ secrets.PUBLISH_USER }} \
           -PmoddingxPassword=${{ secrets.PUBLISH_PASSWORD }} \
           build javadoc publish
+      - name: 'Generate .nojekyll marker'
+        run: touch build/docs/javadoc/.nojekyll
       - name: 'Publish Javadoc'
         uses: 'JamesIves/github-pages-deploy-action@v4.6.1'
         with:
