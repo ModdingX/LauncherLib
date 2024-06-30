@@ -171,7 +171,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static @Nullable <a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#and(org.moddingx.launcherlib.util.Side...)" class="member-name-link">and</a><wbr>(<a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a>...&nbsp;sides)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Adds multiple <a href="Side.html" title="enum class in org.moddingx.launcherlib.util"><code>Side</code></a>s.</div>
@@ -181,7 +181,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Gets a <a href="Side.html" title="enum class in org.moddingx.launcherlib.util"><code>Side</code></a> from its id.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static @Nullable <a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#get(boolean,boolean)" class="member-name-link">get</a><wbr>(boolean&nbsp;client,
  boolean&nbsp;server)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -327,7 +327,7 @@ not permitted.)</div>
 <section class="detail" id="get(boolean,boolean)">
 <h3>get</h3>
 <div class="member-signature"><span class="annotations">@Nullable
-</span><span class="modifiers">public static</span>&nbsp;<span class="return-type">@Nullable <a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a></span>&nbsp;<span class="element-name">get</span><wbr><span class="parameters">(boolean&nbsp;client,
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a></span>&nbsp;<span class="element-name">get</span><wbr><span class="parameters">(boolean&nbsp;client,
  boolean&nbsp;server)</span></div>
 <div class="block">Gets a side object that matches the given availability on client and server. If both <code>client</code>
  and <code>server</code> are <code>false</code>, <code>null</code> is returned.</div>
@@ -348,7 +348,7 @@ not permitted.)</div>
 <section class="detail" id="and(org.moddingx.launcherlib.util.Side...)">
 <h3>and</h3>
 <div class="member-signature"><span class="annotations">@Nullable
-</span><span class="modifiers">public static</span>&nbsp;<span class="return-type">@Nullable <a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a></span>&nbsp;<span class="element-name">and</span><wbr><span class="parameters">(<a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a>...&nbsp;sides)</span></div>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a></span>&nbsp;<span class="element-name">and</span><wbr><span class="parameters">(<a href="Side.html" title="enum class in org.moddingx.launcherlib.util">Side</a>...&nbsp;sides)</span></div>
 <div class="block">Adds multiple <a href="Side.html" title="enum class in org.moddingx.launcherlib.util"><code>Side</code></a>s. This can be used to determine the required side for transitive dependencies.
  Suppose a mod <code>A</code> is installed on side <code>sideA</code> and has a dependency for side <code>sideB</code>.
  <code>and(sideA, sideB)</code> would then be the side, on which the dependency is required.
