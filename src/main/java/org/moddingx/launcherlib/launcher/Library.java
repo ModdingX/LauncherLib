@@ -1,6 +1,6 @@
 package org.moddingx.launcherlib.launcher;
 
-import org.jetbrains.annotations.Nullable;
+import jakarta.annotation.Nullable;
 import org.moddingx.launcherlib.launcher.cache.LauncherCache;
 import org.moddingx.launcherlib.util.Artifact;
 

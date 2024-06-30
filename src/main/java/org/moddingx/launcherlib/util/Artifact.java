@@ -1,7 +1,7 @@
 package org.moddingx.launcherlib.util;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -199,7 +199,7 @@ public final class Artifact implements Comparable<Artifact>, Serializable {
     private static final Comparator<Object[]> VERSION_COMPARATOR = (a, b) -> Arrays.compare(a, b, VERSION_PART_COMPARATOR);
     
     @Override
-    public int compareTo(@NotNull Artifact artifact) {
+    public int compareTo(@Nonnull Artifact artifact) {
         if (this.decomposedVersion == null) this.decomposedVersion = this.decomposeVersion();
         if (artifact.decomposedVersion == null) artifact.decomposedVersion = artifact.decomposeVersion();
         int cmp;

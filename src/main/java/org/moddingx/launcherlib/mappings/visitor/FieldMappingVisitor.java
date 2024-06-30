@@ -1,6 +1,6 @@
 package org.moddingx.launcherlib.mappings.visitor;
 
-import org.jetbrains.annotations.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * Provides an ASM-like visitor for field mappings.

@@ -1,8 +1,8 @@
 package org.moddingx.launcherlib.mappings;
 
+import jakarta.annotation.Nullable;
 import net.neoforged.srgutils.IMappingBuilder;
 import net.neoforged.srgutils.IMappingFile;
-import org.jetbrains.annotations.Nullable;
 import org.moddingx.launcherlib.mappings.visitor.*;
 
 import java.util.*;

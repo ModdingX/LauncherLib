@@ -1,6 +1,6 @@
 package org.moddingx.launcherlib.util;
 
-import org.jetbrains.annotations.Nullable;
+import jakarta.annotation.Nullable;
 
 import java.util.Locale;
 import java.util.Objects;
