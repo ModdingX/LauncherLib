@@ -23,7 +23,7 @@ import java.util.*;
 /**
  * Provides access to the launcher metadata.
  * 
- * @see <a href="https://minecraft.fandom.com/wiki/Version_manifest.json">version manifest</a>
+ * @see <a href="https://minecraft.wiki/w/Version_manifest.json">version manifest</a>
  */
 public class Launcher {
 

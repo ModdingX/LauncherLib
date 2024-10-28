@@ -13,7 +13,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /**
- * Class to read and write binary <a href="https://minecraft.fandom.com/wiki/NBT_format#Binary_format">NBT</a>.
+ * Class to read and write binary <a href="https://minecraft.wiki/w/NBT_format#Binary_format">NBT</a>.
  */
 public class NBT {
 

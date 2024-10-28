@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * Class to read and write <a href="https://minecraft.fandom.com/wiki/NBT_format#SNBT_format">SNBT</a>.
+ * Class to read and write <a href="https://minecraft.wiki/w/NBT_format#SNBT_format">SNBT</a>.
  */
 public class SNBT {
 

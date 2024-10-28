@@ -81,7 +81,7 @@ public enum TagType {
     /**
      * Gets the id of the tag type.
      * 
-     * @see <a href="https://minecraft.fandom.com/wiki/NBT_format#Binary_format">NBT format/Binary format</a>
+     * @see <a href="https://minecraft.wiki/w/NBT_format#Binary_format">NBT format/Binary format</a>
      */
     public final int id() {
         return this.ordinal();
@@ -92,7 +92,7 @@ public enum TagType {
      * 
      * @throws InvalidNbtException If there is no such tag type.
      * 
-     * @see <a href="https://minecraft.fandom.com/wiki/NBT_format#Binary_format">NBT format/Binary format</a>
+     * @see <a href="https://minecraft.wiki/w/NBT_format#Binary_format">NBT format/Binary format</a>
      */
     public static TagType get(int id) throws InvalidNbtException {
         try {
