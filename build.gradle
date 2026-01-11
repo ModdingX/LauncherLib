@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'org.moddingx'
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 repositories {
     mavenCentral()
@@ -12,21 +12,26 @@ repositories {
 
 dependencies {
     api 'jakarta.annotation:jakarta.annotation-api:3.0.0'
-    api 'com.google.code.gson:gson:2.11.0'
-    api 'net.neoforged:srgutils:1.0.9'
+    api 'com.google.code.gson:gson:2.13.2'
+    api 'net.neoforged:srgutils:1.0.10'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.3'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.14.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.14.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.14.2'
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
+var sourcesJar = tasks.register('sourcesJar', Jar) {
     archiveClassifier = 'sources'
     from sourceSets.main.allSource
+    dependsOn tasks.named('classes')
 }
-build.dependsOn sourcesJar
+
+tasks.named('build').configure { task ->
+    task.dependsOn sourcesJar
+}
 
 javadoc {
-    options.addStringOption("link", "https://docs.oracle.com/en/java/javase/21/docs/api/")
+    options.addStringOption("link", "https://docs.oracle.com/en/java/javase/25/docs/api/")
 }
 
 test {
